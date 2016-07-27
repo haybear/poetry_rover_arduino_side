@@ -1,5 +1,5 @@
 /*
-  Alpha.h - Library for creating letters in five dot marquee text.
+  Alpha.cpp - Library for creating letters in five dot marquee text.
   Created by Matthew Hebert, June 22, 2016.
   Released into the public domain.
 */
