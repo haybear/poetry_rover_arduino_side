@@ -19,13 +19,13 @@ int pattern;
 Alpha Alpha;
 int pixel;
 
-byte letters[26][5][5]={
-      {
+const byte letters[26][5][5] PROGMEM={
+    {
     {1,1,1,1,0},      //Letter A
-        {0,0,1,0,1},    
-          {0,0,1,0,1},    
-            {0,0,1,0,1},    
-            {1,1,1,1,0}
+    {0,0,1,0,1},    
+    {0,0,1,0,1},    
+    {0,0,1,0,1},    
+    {1,1,1,1,0}
     },
     {   
     {1,1,1,1,1},      //Letter B  
@@ -33,7 +33,7 @@ byte letters[26][5][5]={
     {1,0,1,0,1},    
     {1,0,1,0,1},    
     {0,1,0,1,0}     
-          },
+    },
     {
     {0,1,1,1,0},      //Letter C
     {1,0,0,0,1},    
@@ -46,7 +46,7 @@ byte letters[26][5][5]={
     {1,0,0,0,1},  
     {1,0,0,0,1},  
     {1,0,0,0,1},  
-    {1,1,1,1,1}   
+    {0,1,1,1,0}   
     },  
     {
     {1,1,1,1,1},      //Letter E
@@ -114,17 +114,17 @@ byte letters[26][5][5]={
     {
     {1,1,1,1,1},    //Letter N
     {0,0,0,0,1},  
-          {0,1,1,1,0},  
+    {0,1,1,1,0},  
     {1,0,0,0,0},  
     {1,1,1,1,1}   
-          },
+    },
     {
     {0,1,1,1,0},    //Letter O
     {1,0,0,0,1},  
     {1,0,0,0,1},  
     {1,0,0,0,1},  
     {0,1,1,1,0}   
-          },
+    },
     {
     {1,1,1,1,1},    //Letter P
     {0,0,1,0,1},  
@@ -187,7 +187,7 @@ byte letters[26][5][5]={
     {0,0,1,0,0},  
     {0,1,0,1,0},  
     {1,0,0,0,1}   
-          },
+    },
     {
     {0,0,0,1,1},    //Letter Y
     {0,0,1,0,0},  
@@ -215,14 +215,21 @@ void loop() {
     pattern = Alpha.letterPattern(character); 
   for (int x=0; x<5; x++){
     for (int y=0; y<5; y++){
-     pixel = letters[pattern][x][y];
-     if (y<4) Serial.print(pixel);    
-     if (y==4)Serial.println(pixel); 
+     pixel = pgm_read_byte(&(letters[pattern][x][y]));
+     if (y<4){
+      if (pixel == 0) Serial.print("   ");
+      if (pixel == 1) Serial.print(" @ ");
+     } 
+     if (y==4){
+      if (pixel == 0) Serial.println("   ");
+      if (pixel == 1) Serial.println(" @ ");
+     }
+     }
     }
+    Serial.println("");
+    Serial.println("");
   }   
   } 
-}
-
 
 
 
